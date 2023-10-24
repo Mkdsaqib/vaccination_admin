@@ -14,12 +14,12 @@ $URL = $_POST['url'];
 $Telephone = $_POST['telephone'];
 $Password = $_POST['password'];
 $Description = $_POST['description'];
-$File_input = $_POST['img'];
+// $File_input = $_POST['img'];
 
 
 
 
-$user_image = $_FILES['img'];
+// $user_image = $_FILES['img'];
 
 // Get the file name and temporary file name.
 $imagename = $_FILES['img']['name'];

@@ -1,18 +1,85 @@
+<?php include 'connection\database.php' ?>
+
+<?php
+
+
+
+
+if(isset($_POST['submit'])){
+
+   $hospital_name = $_POST['hospital_name'];
+$Address = $_POST['address'];
+$Email = $_POST['email'];
+$URL = $_POST['url'];
+$Telephone = $_POST['telephone'];
+$Password = $_POST['password'];
+$Description = $_POST['description'];
+$File_input = $_POST['img'];
+
+
+
+
+$user_image = $_FILES['img'];
+
+// Get the file name and temporary file name.
+$imagename = $_FILES['img']['name'];
+$imagetmpname = $_FILES['img']['tmp_name'];
+
+// Move the uploaded file to the destination directory.
+move_uploaded_file($imagetmpname, "assets/images/" . $imagename);
+
+
+$register_user_query = "INSERT INTO `hosp-reg`(`hospital_name`, `address`, `email`, `url`, `telephone`, `password`, `description`, `img`) VALUES (:hospital_name,:address,:email,:url,:telephone,:password,:description,:img)";
+	
+$register_user_query_prepare = $connection->prepare($register_user_query);
+$register_user_query_prepare->bindParam('hospital_name',$hospital_name);
+$register_user_query_prepare->bindParam(':address',$Address);
+$register_user_query_prepare->bindParam(':email',$Email);
+$register_user_query_prepare->bindParam(':url',$URL);
+$register_user_query_prepare->bindParam(':telephone',$Telephone);
+$register_user_query_prepare->bindParam(':password',$Password);
+$register_user_query_prepare->bindParam(':description',$Description);
+$register_user_query_prepare->bindParam(':img',$imagename);
+
+$register_user_query_prepare->execute();
+
+
+
+// Get the uploaded file information.
+
+
+
+
+
+}
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-   <title>Admin Panel</title>
+   <title>ADD HOSPITAL</title>
    <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
    <!--[if lt IE 9]>
-     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-     <![endif]-->
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
+   <!-- Meta -->
    <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="description" content="codedthemes">
+   <meta name="keywords" content=", Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+   <meta name="author" content="codedthemes">
+
    <!-- Favicon icon -->
    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
@@ -32,12 +99,8 @@
    <!-- Required Fremwork -->
    <link rel="stylesheet" type="text/css" href="assets/plugins/bootstrap/css/bootstrap.min.css">
 
-   <!-- Chartlist chart css -->
-   <link rel="stylesheet" href="assets/plugins/chartist/dist/chartist.css" type="text/css" media="all">
-
-   <!-- Weather css -->
-   <link href="assets/css/svg-weather.css" rel="stylesheet">
-
+   <!-- bash syntaxhighlighter css -->
+   <link type="text/css" rel="stylesheet" href="assets/plugins/syntaxhighlighter/styles/shCoreDjango.css" />
 
    <!-- Style.css -->
    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
@@ -45,14 +108,16 @@
    <!-- Responsive.css-->
    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
 
+
+
 </head>
 
 <body class="sidebar-mini fixed">
-   <div class="loader-bg">
-      <div class="loader-bar">
-      </div>
-   </div>
    <div class="wrapper">
+      <div class="loader-bg">
+         <div class="loader-bar">
+         </div>
+      </div>
       <!-- Navbar-->
       <header class="main-header-top hidden-print">
          <a href="index.html" class="logo"><img class="img-fluid able-logo" src="assets/images/logo.png" alt="Theme-logo"></a>
@@ -64,10 +129,10 @@
                   <a href="#!" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle drop icon-circle drop-image">
                      <i class="ti-files"> </i><span> Files</span>
                   </a>
-               </li>               
+               </li>
                <li class="dropdown">
                   <a href="#!" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle drop icon-circle drop-image">
-                     <span>Vaccination Record </span><i class=" icofont icofont-simple-down"></i>
+                     <span>Dropdown </span><i class=" icofont icofont-simple-down"></i>
                   </a>
                   <ul class="dropdown-menu settings-menu">
                      <li><a href="#">List item 1</a></li>
@@ -84,23 +149,16 @@
                </li>
             </ul>
             <!-- Navbar Right Menu-->
-            <div class="navbar-custom-menu f-right">
-              <div class="upgrade-button">
-                <a href="#" class="icon-circle txt-white btn btn-sm btn-primary upgrade-button">
-                    <span>UpDate</span>
-                </a>
-              </div>
-
+            <div class="navbar-custom-menu">
                <ul class="top-nav">
                   <!--Notification Menu-->
-                    
                   <li class="dropdown notification-menu">
                      <a href="#!" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">
                         <i class="icon-bell"></i>
-                        
+                        <span class="badge badge-danger header-badge">9</span>
                      </a>
                      <ul class="dropdown-menu">
-                        <li class="not-head">You have <b class="text-primary">a</b> new notifications.</li>
+                        <li class="not-head">You have <b class="text-primary">4</b> new notifications.</li>
                         <li class="bell-notification">
                            <a href="javascript:;" class="media">
                               <span class="media-left media-icon">
@@ -175,15 +233,15 @@
                   </form>
                   <div class="morphsearch-content">
                      <div class="dummy-column">
-                        <h2>Patients</h2>
+                        <h2>People</h2>
                         <a class="dummy-media-object" href="#!">
                            <img class="round" src="http://0.gravatar.com/avatar/81b58502541f9445253f30497e53c280?s=50&d=identicon&r=G" alt="Sara Soueidan" />
-                           <h3>Sara kamaal</h3>
+                           <h3>Sara Soueidan</h3>
                         </a>
 
                         <a class="dummy-media-object" href="#!">
                            <img class="round" src="http://1.gravatar.com/avatar/9bc7250110c667cd35c0826059b81b75?s=50&d=identicon&r=G" alt="Shaun Dona" />
-                           <h3>Maaz Saleem</h3>
+                           <h3>Shaun Dona</h3>
                         </a>
                      </div>
                      <div class="dummy-column">
@@ -223,13 +281,13 @@
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
                 <li class="nav-level">--- Navigation</li>
-                <li class="active treeview">
+                <li class="treeview">
                     <a class="waves-effect waves-dark" href="index.html">
-                        <i class="icon-speedometer"></i><span> Admin Panel</span>
+                        <i class="icon-speedometer"></i><span> Dashboard</span>
                     </a>                
                 </li>
                 <li class="nav-level">--- Components</li>
-                <li class="treeview"><a class="waves-effect waves-dark" href="#!"><i class="icon-briefcase"></i><span> Available Vaccine</span><i class="icon-arrow-down"></i></a>
+                <li class="treeview"><a class="waves-effect waves-dark" href="#!"><i class="icon-briefcase"></i><span> UI Elements</span><i class="icon-arrow-down"></i></a>
                     <ul class="treeview-menu">
                         <li><a class="waves-effect waves-dark" href="accordion.html"><i class="icon-arrow-right"></i> Accordion</a></li>
                         <li><a class="waves-effect waves-dark" href="button.html"><i class="icon-arrow-right"></i> Button</a></li>
@@ -253,9 +311,9 @@
                     </ul>
                 </li>
 
-                <li class="treeview"><a class="waves-effect waves-dark" href="#!"><i class="icon-book-open"></i><span> Forms</span><i class="icon-arrow-down"></i></a>
+                <li class="active treeview"><a class="waves-effect waves-dark" href="#!"><i class="icon-book-open"></i><span> Forms</span><i class="icon-arrow-down"></i></a>
                     <ul class="treeview-menu">
-                        <li><a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i class="icon-arrow-right"></i> Form Elements Bootstrap</a></li>
+                        <li class="active"><a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i class="icon-arrow-right"></i> Form Elements Bootstrap</a></li>
                         
                         <li><a class="waves-effect waves-dark" href="form-elements-advance.html"><i class="icon-arrow-right"></i> Form Elements Advance</a></li>
                     </ul>
@@ -267,11 +325,6 @@
                     </a>                
                 </li>
 
-                <li class="treeview">
-                  <a class="waves-effect waves-dark" href="hosp-detail.php">
-                      <i class="icon-list"></i><span> Hospital Detail</span>
-                  </a>                
-              </li>
 
                 <li class="nav-level">--- More</li>
 
@@ -279,9 +332,9 @@
                     <ul class="treeview-menu">
                         <li class="treeview"><a href="#!"><i class="icon-arrow-right"></i><span> Authentication</span><i class="icon-arrow-down"></i></a>
                             <ul class="treeview-menu">
-                                <li><a class="waves-effect waves-dark" href="register.php" target="_blank"><i class="icon-arrow-right"></i> Register 1</a></li>
+                                <li><a class="waves-effect waves-dark" href="register1.html" target="_blank"><i class="icon-arrow-right"></i> Register 1</a></li>
                                 
-                                <li><a class="waves-effect waves-dark" href="login.php" target="_blank"><i class="icon-arrow-right"></i><span> Login 1</span></a></li>
+                                <li><a class="waves-effect waves-dark" href="login1.html" target="_blank"><i class="icon-arrow-right"></i><span> Login 1</span></a></li>
                                 <li><a class="waves-effect waves-dark" href="forgot-password.html" target="_blank"><i class="icon-arrow-right"></i><span> Forgot Password</span></a></li>
                                 
                             </ul>
@@ -350,6 +403,7 @@
          <div class="had-container">
             <div class="card card_main header-users-main">
                <div class="card-content user-box">
+
                   <div class="md-group-add-on p-20">
                      <span class="md-add-on">
                                     <i class="icofont icofont-search-alt-2 chat-search"></i>
@@ -362,7 +416,7 @@
                   </div>
                   <div class="media friendlist-main">
 
-                     <h6>Patient List</h6>
+                     <h6>Friend List</h6>
 
                   </div>
                   <div class="main-friend-list">
@@ -373,7 +427,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -383,7 +437,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Jasmin</div>
+                           <div class="friend-header">Alice</div>
                            <span>1 hour ago</span>
                         </div>
                      </div>
@@ -393,7 +447,7 @@
                            <div class="live-status bg-danger"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Shahrukh Khan</div>
+                           <div class="friend-header">Michael Scofield</div>
                            <span>3 hours ago</span>
                         </div>
                      </div>
@@ -413,7 +467,7 @@
                            <div class="live-status bg-danger"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Katrina Kaif</div>
+                           <div class="friend-header">Sara Tancredi</div>
                            <span>2 days ago</span>
                         </div>
                      </div>
@@ -423,7 +477,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -433,7 +487,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Jasmin</div>
+                           <div class="friend-header">Alice</div>
                            <span>1 hour ago</span>
                         </div>
                      </div>
@@ -444,7 +498,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -454,7 +508,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Jasmin</div>
+                           <div class="friend-header">Alice</div>
                            <span>1 hour ago</span>
                         </div>
                      </div>
@@ -465,7 +519,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -475,7 +529,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Jasmin</div>
+                           <div class="friend-header">Alice</div>
                            <span>1 hour ago</span>
                         </div>
                      </div>
@@ -486,7 +540,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -497,7 +551,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -508,7 +562,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -519,7 +573,7 @@
                            <div class="live-status bg-success"></div>
                         </a>
                         <div class="media-body">
-                           <div class="friend-header">Maaz Saleem</div>
+                           <div class="friend-header">Josephin Doe</div>
                            <span>20min ago</span>
                         </div>
                      </div>
@@ -532,7 +586,7 @@
       <div class="showChat_inner">
          <div class="media chat-inner-header">
             <a class="back_chatBox">
-               <i class="icofont icofont-rounded-left"></i> Maaz Saleem
+               <i class="icofont icofont-rounded-left"></i> Josephin Doe
             </a>
          </div>
          <div class="media chat-messages">
@@ -542,7 +596,7 @@
             </a>
             <div class="media-body chat-menu-content">
                <div class="">
-                  <p class="chat-cont">I'm just looking around. Will you tell me something about Vaccine?</p>
+                  <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
                   <p class="chat-time">8:20 a.m.</p>
                </div>
             </div>
@@ -550,7 +604,7 @@
          <div class="media chat-messages">
             <div class="media-body chat-menu-reply">
                <div class="">
-                  <p class="chat-cont">I'm just looking around. Will you tell me something about Vaccine?</p>
+                  <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
                   <p class="chat-time">8:20 a.m.</p>
                </div>
             </div>
@@ -570,9 +624,6 @@
                      <i class="icofont icofont-location-arrow f-20 "></i>
                  </button>
 
-               <button type="button" class="chat-send waves-effect waves-light">
-                    <i class="icofont icofont-location-arrow f-20 "></i>
-                </button>
             </div>
 
          </div>
@@ -580,320 +631,231 @@
       <!-- Sidebar chat end-->
       <div class="content-wrapper">
          <!-- Container-fluid starts -->
-         <!-- Main content starts -->
          <div class="container-fluid">
-            <div class="row">
-               <div class="main-header">
-                  <h4>All Vaccination</h4>
-               </div>
-            </div>
-            <!-- 4-blocks row start -->
-            <div class="row dashboard-header">
-               <div class="col-lg-3 col-md-6">
-                  <div class="card dashboard-product">
-                     <span>Report of vaccination</span>
-                     <h2 class="dashboard-total-products">450</h2>
-                     <span class="label label-warning">Vaccinate</span> Today
-                     <div class="side-box">
-                        <i class="ti-signal text-warning-color"></i>
+            <!-- Main content starts -->
+            <div>
+               <!-- Row Starts -->
+               <div class="row">
+                  <div class="col-sm-12 p-0">
+                     <div class="main-header">
+                        <h4>List of Child Vaccine</h4>
+                        <ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+                           <li class="breadcrumb-item"><a href="index.html"><i class="icofont icofont-home"></i></a>
+                           </li>
+                           <li class="breadcrumb-item"><a href="#">Forms Components</a>
+                          
+                        </ol>
                      </div>
                   </div>
                </div>
-               <div class="col-lg-3 col-md-6">
-                  <div class="card dashboard-product">
-                     <span>Request from parents</span>
-                     <h2 class="dashboard-total-products">670</h2>
-                     <span class="label label-primary">Vaccinate</span>Today
-                     <div class="side-box ">
-                        <i class="ti-gift text-primary-color"></i>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-3 col-md-6">
-                  <div class="card dashboard-product">
-                     <span>Booking Details</span>
-                     <h2 class="dashboard-total-products"><span>780</span></h2>
-                     <span class="label label-success">Vaccinate</span>Today
-                     <div class="side-box">
-                        <i class="ti-direction-alt text-success-color"></i>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-3 col-md-6">
-                  <div class="card dashboard-product">
-                     <span>All child details</span>
-                     <h2 class="dashboard-total-products"><span>2000</span></h2>
-                     <span class="label label-danger">Vaccination</span>Today
-                     <div class="side-box">
-                        <i class="ti-rocket text-danger-color"></i>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- 4-blocks row end -->
+               <!-- Row end -->
 
-            <!-- 1-3-block row start -->
-            <div class="row">
-               <div class="col-lg-4">
-                  <div class="card">
-                     <div class="user-block-2">
-                        <img class="img-fluid" src="assets/images/widget/user-11.png" alt="user-header">
-                        <h5>Shifa Hospital</h5>
-                        <h6>Nazimabad, Karachi</h6>
-                     </div>
-                     <div class="card-block">
-                        <div class="user-block-2-activities">
-                           <div class="user-block-2-active">
-                              <i class="icofont icofont-clock-time"></i>Vaccination Booking
-                              <label class="label label-primary">480</label>
+               <!-- Row start -->
+               <div class="row">
+                  <!-- Form Control starts -->
+     
+                  <!-- Form Control ends -->
+
+                  <!-- Textual inputs starts -->
+                  <div class="col-lg-12">
+                     <div class="card">
+                        <div class="card-header">
+                           <h5 class="card-header-text">Available or Unavailable</h5>
+                           <div class="f-right">
+                              <a href="" data-toggle="modal" data-target="#textual-input-Modal"><i class="icofont icofont-code-alt"></i></a>
                            </div>
                         </div>
-                        <div class="user-block-2-activities">
-                           <div class="user-block-2-active">
-                              <i class="icofont icofont-users"></i> Vaccinate Child 
-                              <label class="label label-primary">390</label>
-                           </div>
-                        </div>
+                        <div class="modal fade modal-flex" id="textual-input-Modal" tabindex="-1" role="dialog">
+                           <div class="modal-dialog modal-lg" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                    <h5 class="modal-title">Code Explanation For Textual Input Types </h5>
+                                 </div>
+                                 <!-- end of modal-header -->
+                                 <div class="modal-body">
+                                    <pre class="brush: html">
+                      	&lt;note&gt; This Code Write inside &lt;form&gt; tag
 
-                        <div class="user-block-2-activities">
-                           <div class="user-block-2-active">
-                              <i class="icofont icofont-ui-user"></i> Parents Registered 
-                              <label class="label label-primary">485</label>
-                           </div>
+						/* use for text textual input */
 
-                        </div>
-                        <div class="user-block-2-activities">
-                           <div class="user-block-2-active">
-                              <i class="icofont icofont-picture"></i> Hospital Registered
-                              <label class="label label-primary">506</label>
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-text-input" class="col-xs-2 col-form-label form-control-label"&gt;Text&lt;label&gt;
+								&lt;div class="col-sm-10"&gt;
+									&lt;input class="form-control" type="text" value="Artisanal kale" id="example-text-input"&gt;
+								&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for search textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-search-input" class="col-xs-2 col-form-label form-control-label"&gt;Search&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="search" value="How do I shoot web" id="example-search-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for email textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-email-input" class="col-xs-2 col-form-label form-control-label"&gt;Email&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="email" value="bootstrap@example.com" id="example-email-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Url textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-url-input" class="col-xs-2 col-form-label form-control-label"&gt;URL&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="url" value="https://getbootstrap.com" id="example-url-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Telephone textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-tel-input" class="col-xs-2 col-form-label form-control-label"&gt;Telephone&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Password textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-password-input" class="col-xs-2 col-form-label form-control-label"&gt;Password&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="password" value="hunter2" id="example-password-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Static Control textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label class="col-sm-2 col-form-label form-control-label"&gt;Static Control&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;p class="form-control-static"&gt;email@example.com&lt;/p&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Number textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-number-input" class="col-xs-2 col-form-label form-control-label"&gt;Number&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="number" value="42" id="example-number-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Date and Time textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-datetime-local-input" class="col-xs-2 col-form-label form-control-label"&gt;Date and time&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Date textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-date-input" class="col-xs-2 col-form-label form-control-label"&gt;Date&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="date" value="2011-08-19" id="example-date-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Month textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-month-input" class="col-xs-2 col-form-label form-control-label"&gt;Month&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="month" value="2011-08" id="example-month-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Week textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-week-input" class="col-xs-2 col-form-label form-control-label"&gt;Week&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="week" value="2011-W33" id="example-week-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Time textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-time-input" class="col-xs-2 col-form-label form-control-label"&gt;Time&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input class="form-control" type="time" value="13:45:00" id="example-time-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for Color textual input */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="example-color-input" class="col-xs-2 col-form-label form-control-label"&gt;Color&lt;/label&gt;
+							&lt;div class="col-sm-10"&gt;
+								&lt;input type="color" class="" name="favcolor" value="#1b8bf9" id="example-color-input"&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+
+						/* use for File Upload Textual */
+
+						&lt;div class="form-group row"&gt;
+							&lt;label for="file" class="col-md-2 col-form-label form-control-label">File input&lt;/label&gt;
+							&lt;div class="col-md-9"&gt;
+								&lt;label for="file" class="custom-file"&gt;
+									&lt;input type="file" id="file" class="custom-file-input"&gt;
+									&lt;span class="custom-file-control"&gt;&lt;/span&gt;
+								&lt;/label&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+                      </pre>
+                                 </div>
+                                 <!-- end of modal-body -->
+                              </div>
+                              <!-- end of modal-content -->
                            </div>
+                           <!-- end of modal-dialog -->+
                         </div>
-                        <div class="text-center">
-                           <button type="button" class="btn btn-warning waves-effect waves-light text-uppercase m-r-30">
-                                    Follows
-                                </button>
-                           <button type="button" class="btn btn-primary waves-effect waves-light text-uppercase">
-                                    Message
-                                </button>
+                        <!-- end of modal -->
+                        <div class="card-block">
+                        <form action="vaccine_availability.php" method="post">
+  <input type="text" name="vaccine_name" placeholder="Enter the name of the child vaccine">
+  <input type="submit" value="Submit">
+</form>
                         </div>
                      </div>
                   </div>
+                  <!-- Textual inputs ends -->
                </div>
-               <div class="col-lg-8">
-                  <div class="card">
-                     <div class="card-header">
-                        <h5 class="card-header-text">Vaccination Chart</h5>
-                     </div>
-                     <div class="card-block">
-                        <div id="barchart" style="min-width: 250px; height: 330px; margin: 0 auto"></div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-xl-4 col-lg-12 grid-item">
-                  <div class="card">
-                     <div class="card-block horizontal-card-img d-flex">
-                        <img class="media-object img-circle" src="assets/images/avatar-3.png" alt="Generic placeholder image">
-                        <div class="d-inlineblock  p-l-20">
-                          <h6>ABC Hospital</h6>
-                          <a href="#">ABC_HOSP@admin.com</a>
-                       </div>
-                        <h6 class="txt-warning rotate-txt">Admin</h6>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-xl-4 col-lg-12 grid-item">
-                  <div class="card">
-                     <div class="card-block horizontal-card-img d-flex">
-                        <img class="media-object img-circle" src="assets/images/lockscreen.png" alt="Generic placeholder image">
-                        <div class="d-inlineblock  p-l-20">
-                          <h6>XYZ Hospital</h6>
-                          <a href="#">XYZ_HOSP@admin.com</a>
-                       </div>
-                        <h6 class="txt-danger rotate-txt">Admin</h6>
-                     </div>
-                  </div>
-               </div>
+               <!-- Row end -->
+
+               <!-- Row end -->
             </div>
-            <!-- 1-3-block row end -->
-
-            <!-- 2-1 block start -->
-            <div class="row">
-               <div class="col-xl-8 col-lg-12">
-                  <div class="card">
-                     <div class="card-block">
-                        <div class="table-responsive">
-                           <table class="table m-b-0 photo-table">
-                              <thead>
-                                 <tr class="text-uppercase">
-                                    <th>Photo</th>
-                                    <th>Project</th>
-                                    <th>Completed</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                    <th>
-                                       <img class="img-fluid img-circle" src="assets/images/avatar-2.png" alt="User">
-                                    </th>
-                                    <td>Appestia Project
-                                       <p><i class="icofont icofont-clock-time"></i>Created 14.9.2016</p>
-                                    </td>
-                                    <td>
-                                       <span class="pie" style="display: none;">226,134</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 1 1 4.209902994920235 25.41987555688496 L 15 15" fill="#2196F3"></path><path d="M 4.209902994920235 25.41987555688496 A 15 15 0 0 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                    </td>
-                                    <td>50%</td>
-                                    <td>October 21, 2015</td>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                       <img class="img-fluid img-circle" src="assets/images/avatar-4.png" alt="User">
-                                    </th>
-                                    <td>Contract with belife Company
-                                       <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                    </td>
-                                    <td>
-                                       <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path><path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                    </td>
-                                    <td>70%</td>
-                                    <td>November 21, 2015</td>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                       <img class="img-fluid img-circle" src="assets/images/avatar-1.png" alt="User">
-                                    </th>
-                                    <td>Web Consultancy project
-                                       <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                    </td>
-                                    <td>
-                                       <span class="pie" style="display: none;">1,4</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 29.265847744427305 10.36474508437579 L 15 15" fill="#2196F3"></path><path d="M 29.265847744427305 10.36474508437579 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                    </td>
-                                    <td>40%</td>
-                                    <td>September 21, 2015</td>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                       <img class="img-fluid img-circle" src="assets/images/avatar-3.png" alt="User">
-                                    </th>
-                                    <td>Contract with belife Company
-                                       <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                    </td>
-                                    <td>
-                                       <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path><path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                    </td>
-                                    <td>70%</td>
-                                    <td>November 21, 2015</td>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                       <img class="img-fluid img-circle" src="assets/images/avatar-1.png" alt="User">
-                                    </th>
-                                    <td>Contract with belife Company
-                                       <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                    </td>
-                                    <td>
-                                       <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path><path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                    </td>
-                                    <td>70%</td>
-                                    <td>November 21, 2015</td>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                       <img class="img-fluid img-circle" src="assets/images/avatar-2.png" alt="User">
-                                    </th>
-                                    <td>Contract with belife Company
-                                       <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                    </td>
-                                    <td>
-                                       <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path><path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                    </td>
-                                    <td>70%</td>
-                                    <td>November 21, 2015</td>
-                                 </tr>
-
-                              </tbody>
-                           </table>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-xl-4 col-lg-12">
-                  <div class="card">
-                     <div class="card-header">
-                        <h5 class="card-header-text">Bar chart</h5>
-                     </div>
-                     <div class="card-block">
-                        <div id="piechart" style="min-width: 250px; height: 460px; margin: 0 auto"></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- 2-1 block end -->
+            <!-- Main content ends -->
          </div>
-         <!-- Main content ends -->
          <!-- Container-fluid ends -->
-         <div class="fixed-button">
-            <a href="#!" class="btn btn-md btn-primary">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i> Upgrade To Pro
-            </a>
-         </div>
       </div>
    </div>
 
 
-   <!-- Warning Section Starts -->
-   <!-- Older IE warning message -->
-   <!--[if lt IE 9]>
-      <div class="ie-warning">
-          <h1>Warning!!</h1>
-          <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
-          <div class="iew-container">
-              <ul class="iew-download">
-                  <li>
-                      <a href="http://www.google.com/chrome/">
-                          <img src="assets/images/browser/chrome.png" alt="Chrome">
-                          <div>Chrome</div>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="https://www.mozilla.org/en-US/firefox/new/">
-                          <img src="assets/images/browser/firefox.png" alt="Firefox">
-                          <div>Firefox</div>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="http://www.opera.com">
-                          <img src="assets/images/browser/opera.png" alt="Opera">
-                          <div>Opera</div>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="https://www.apple.com/safari/">
-                          <img src="assets/images/browser/safari.png" alt="Safari">
-                          <div>Safari</div>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                          <img src="assets/images/browser/ie.png" alt="">
-                          <div>IE (9 & above)</div>
-                      </a>
-                  </li>
-              </ul>
-          </div>
-          <p>Sorry for the inconvenience!</p>
-      </div>
-      <![endif]-->
-   <!-- Warning Section Ends -->
-
    <!-- Required Jqurey -->
-   <script src="assets/plugins/Jquery/dist/jquery.min.js"></script>
+   <script src="assets/plugins/jquery/dist/jquery.min.js"></script>
    <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
    <script src="assets/plugins/tether/dist/js/tether.min.js"></script>
 
    <!-- Required Fremwork -->
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+   <!-- waves effects.js -->
+   <script src="assets/plugins/Waves/waves.min.js"></script>
 
    <!-- Scrollbar JS-->
    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
@@ -905,37 +867,18 @@
    <!-- notification -->
    <script src="assets/plugins/notification/js/bootstrap-growl.min.js"></script>
 
-   <!-- Sparkline charts -->
-   <script src="assets/plugins/jquery-sparkline/dist/jquery.sparkline.js"></script>
-
-   <!-- Counter js  -->
-   <script src="assets/plugins/waypoints/jquery.waypoints.min.js"></script>
-   <script src="assets/plugins/countdown/js/jquery.counterup.js"></script>
-
-   <!-- Echart js -->
-   <script src="assets/plugins/charts/echarts/js/echarts-all.js"></script>
-
-   <script src="https://code.highcharts.com/highcharts.js"></script>
-   <script src="https://code.highcharts.com/modules/exporting.js"></script>
-   <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+   <!-- Highliter js -->
+   <script type="text/javascript" src="assets/plugins/syntaxhighlighter/scripts/shCore.js"></script>
+   <script type="text/javascript" src="assets/plugins/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+   <script type="text/javascript" src="assets/plugins/syntaxhighlighter/scripts/shBrushXml.js"></script>
+   <script type="text/javascript">
+      SyntaxHighlighter.all();
+   </script>
 
    <!-- custom js -->
    <script type="text/javascript" src="assets/js/main.min.js"></script>
-   <script type="text/javascript" src="assets/pages/dashboard.js"></script>
    <script type="text/javascript" src="assets/pages/elements.js"></script>
    <script src="assets/js/menu.min.js"></script>
-<script>
-var $window = $(window);
-var nav = $('.fixed-button');
-$window.scroll(function(){
-    if ($window.scrollTop() >= 200) {
-       nav.addClass('active');
-    }
-    else {
-       nav.removeClass('active');
-    }
-});
-</script>
 
 </body>
 

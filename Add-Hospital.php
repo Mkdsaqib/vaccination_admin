@@ -18,6 +18,13 @@ $Description = $_POST['description'];
 
 
 
+if(empty($hospital_name) || empty($Address) || empty($Email) || empty($URL) || empty($Telephone) || empty($Password) || empty($Description)) 
+{
+   echo "<script>alert('kindly fill all the fileds')</script>";
+}
+else
+{
+
 
 // $user_image = $_FILES['img'];
 
@@ -42,7 +49,7 @@ $register_user_query_prepare->bindParam(':description',$Description);
 $register_user_query_prepare->bindParam(':img',$imagename);
 
 $register_user_query_prepare->execute();
-
+header("location:hosp-detail.php");
 
 
 // Get the uploaded file information.
@@ -50,7 +57,7 @@ $register_user_query_prepare->execute();
 
 
 
-
+}
 }
 
 
@@ -65,14 +72,7 @@ $register_user_query_prepare->execute();
 
 <head>
    <title>ADD HOSPITAL</title>
-   <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
-   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-   <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-   <!-- Meta -->
+   
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -313,9 +313,9 @@ $register_user_query_prepare->execute();
 
                 <li class="active treeview"><a class="waves-effect waves-dark" href="#!"><i class="icon-book-open"></i><span> Forms</span><i class="icon-arrow-down"></i></a>
                     <ul class="treeview-menu">
-                        <li class="active"><a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i class="icon-arrow-right"></i> Form Elements Bootstrap</a></li>
+                        <li class="active"><a class="waves-effect waves-dark" href="Add-Hospital.php"><i class="icon-arrow-right"></i>Add Hospital</a></li>
                         
-                        <li><a class="waves-effect waves-dark" href="form-elements-advance.html"><i class="icon-arrow-right"></i> Form Elements Advance</a></li>
+                        <li><a class="waves-effect waves-dark" href="vaccine-info.php"><i class="icon-arrow-right"></i>Vaccine Status</a></li>
                     </ul>
                 </li>
                 
@@ -860,13 +860,13 @@ $register_user_query_prepare->execute();
                               <div class="form-group row">
                                  <label for="example-password-input" class="col-xs-2 col-form-label form-control-label">Password</label>
                                  <div class="col-sm-10">
-                                    <input class="form-control" name="password" type="password" id="example-password-input">
+                                    <input class="form-control" name="password" type="password" id="example-password-input" >
                                  </div>
                               </div>
                               <div class="form-group row">
                                  <label for="example-Description-input" class="col-xs-2 col-form-label form-control-label">Description</label>
                                  <div class="col-sm-10">
-                                    <input class="form-control" name="description" type="Text" id="example-Despcription-input">
+                                    <input class="form-control" name="description" type="Text" id="example-Despcription-input" >
                                  </div>
                               </div>
             
@@ -874,7 +874,7 @@ $register_user_query_prepare->execute();
                                  <label for="file" class="col-md-2 col-form-label form-control-label">File input</label>
                                  <div class="col-md-9">
                                     <label for="file" class="custom-file">
-                                                <input type="file" value="Upload Image" name="img" id="file" class="custom-file-input">
+                                                <input type="file" value="Upload Image" name="img" id="file" class="custom-file-input"required>
                                                 <span class="custom-file-control"></span>
                                             </label>
                                  </div>
@@ -882,7 +882,9 @@ $register_user_query_prepare->execute();
 
                               <div class="form-group row">
                                  <div class="col-sm-6">
-                                    <input class="form-control" name="submit" type="submit" id="example-Despcription-input">
+                                    <a href= "hosp-detail.php">
+                              <input class="form-control" name="submit" type="submit" id="example-Despcription-input">
+                                    </a>
                                  </div>
                               </div>
             

@@ -320,8 +320,8 @@ header("location:hosp-detail.php");
                 </li>
                 
                 <li class="treeview">
-                    <a class="waves-effect waves-dark" href="basic-table.html">
-                        <i class="icon-list"></i><span> Table</span>
+                    <a class="waves-effect waves-dark" href="hosp-detail.php">
+                        <i class="icon-list"></i><span>Hospital Details</span>
                     </a>                
                 </li>
 

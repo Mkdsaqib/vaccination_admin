@@ -829,16 +829,36 @@ $register_user_query_prepare->execute();
                         <form action="vaccination-check.php" method="post">
   <div class="form-group">
     <label for="vaccine">Vaccine Name</label>
-    <input type="text" class="form-control" name="vaccine" id="vaccine" required>
+                        <select class="form-control" name="vaccine">
+										
+                              <option value="AL">Hepatitis B</option>
+                              <option value="WY"> Diphtheria, tetanus, & acellular pertussis</option>
+                              <option value="WY"> Poliovirus</option>
+                              <option value="WY"> Haemophilus influenzae type b</option>
+                              <option value="WY"> Pneumococca</option>
+                              <option value="WY"> Rotavirus</option>
+                              <option value="WY"> Meningococcal B</option>
+                              <option value="WY"> Meningococcal B and ACWYB</option>
+                              <option value="WY">Influenza</option>
+                              <option value="WY">Measles, mumps, rubella</option>
+                              <option value="WY">Varicella</option>
+                              <option value="WY">SARS-CoV-2</option>
+                           
+                        </select>
+                   
   </div>
+  
   <div class="form-group">
-    <label for="vaccine">Vaccine Type</label>
-    <input type="text" class="form-control" name="vaccine" id="vaccine" required>
-  </div>
-  <div class="form-group">
-    <label for="vaccine">Status</label>
-    <input type="text" class="form-control" name="vaccine" id="vaccine" required>
-  </div>
+  <label for="vaccine">Vaccine Status</label>
+                        <select class="form-control" name="vaccine">
+										
+                              <option value="AL">Available</option>
+                              <option value="AL">Not Available</option>
+                              
+                           
+                        </select>
+                        
+                     </div>
   <div class="form-group">
     <input type="submit" class="btn btn-primary" value="Check Availability">
   </div>

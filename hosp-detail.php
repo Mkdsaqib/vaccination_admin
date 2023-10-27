@@ -22,7 +22,7 @@ print_r($hosp_tab);
 <html lang="en">
 
 <head>
-   <title>Quantum Able Bootstrap 4 Admin Dashboard Template</title>
+   <title>HOSPITAL DETAIL</title>
    <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
    <!--[if lt IE 9]>
@@ -159,7 +159,7 @@ print_r($hosp_tab);
                   <!-- User Menu-->
                   <li class="dropdown">
                      <a href="#!" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle drop icon-circle drop-image">
-                        <span><img class="img-circle " src="assets/images/" style="width:40px;" alt="User Image"></span>
+                        <span><img class="img-circle " src="assets/images/avatar-6.png" style="width:40px;" alt="User Image"></span>
                         <span>SAQIB <b>SHEIKH</b> <i class=" icofont icofont-simple-down"></i></span>
 
                      </a>
@@ -604,9 +604,8 @@ print_r($hosp_tab);
                               <i class="icofont icofont-home"></i>
                            </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#">Tables</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="basic-table.html">Hospital Details Table</a>
+                        
+                        <li class="breadcrumb-item"><a href="hosp-detail.php">Hospital Details</a>
                         </li>
                      </ol>
                   </div>
@@ -621,7 +620,7 @@ print_r($hosp_tab);
                   <!-- Basic Table starts -->
                   <div class="card">
                      <div class="card-header">
-                        <h5 class="card-header-text">Hospital Details Table</h5>
+                        <h5 class="card-header-text">Hospital Details </h5>
                         
                      </div>
                      <div class="card-block">
@@ -638,6 +637,7 @@ print_r($hosp_tab);
                                        <th>Description</th>
                                        <th>Password</th>
                                        <th>Image</th>
+                                  
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -651,7 +651,13 @@ print_r($hosp_tab);
                                     <td><?php echo $hosp['description']; ?></td>
                                     <td><?php echo $hosp['password']; ?></td>
                                     <td><img width='100px' src="assets/images/<?php echo $hosp['img']; ?>" alt="Hospital image"></td>
-                                  </tr>
+                                    <td>
+        <button><a href="Update-Hospital.php?id=<?php echo $hosp['id']; ?>">Update</a></button>
+        <button><a href="delete.php?id=<?php echo $hosp['id']; ?>">Delete</a></button>
+      </td>
+                                 </tr>
+                              <td>
+                            
                                   
                                     <?php } ?>
                                  </tbody>
